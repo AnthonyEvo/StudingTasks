@@ -5,9 +5,10 @@ import java.io.*;
 public class SumModule {
 	
 	int count = 0, sPos, ePos, bestResult = 0;
+	
 	SumModule()
 	{
-		File input = new File("smIn.txt");
+		File input = new File("input.txt");
 		File output = new File("output.txt");
 		try(FileInputStream iS = new FileInputStream(input); FileOutputStream oS = new FileOutputStream(output))
 		{
@@ -52,11 +53,11 @@ public class SumModule {
 	
 	synchronized void setBestResult(int value, int sPos, int ePos)
 	{
-		if(value > bestResult) 
+		if(Math.abs(value) > Math.abs(bestResult)) 
 		{	
 			bestResult = value;
 			this.sPos = sPos + 1;
-			this.ePos = ePos + 1;		
+			this.ePos = ePos + 1;
 		}
 		count--;
 		if(count == 0) notify();
@@ -80,12 +81,13 @@ public class SumModule {
 			for(int i = pos, j = 0 ; i < arr.length; i++)
 			{
 				j += arr[i];
-				if(Math.abs(j) > result) 
+				if(Math.abs(j) > Math.abs(result)) 
 				{
 					result = j;
 					ePos = i;
 				}
 			}
+			System.out.println(result);
 			setBestResult(result, sPos, ePos);
 		}
 	}
