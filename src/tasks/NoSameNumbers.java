@@ -5,20 +5,22 @@ public class NoSameNumbers
 {
 	NoSameNumbers()
 	{
-		 File input = new File("nsnIn.txt");
-		 File output = new File("output.txt");
-		 try(FileInputStream iS = new FileInputStream(input); FileOutputStream oS = new FileOutputStream(output))
-		 {
-			 String line = "";
-			 int i = 0;
-			 while((i = iS.read()) != -1) line += (char) i;
-			 output.createNewFile();
-			 oS.write(("" + check(Integer.parseInt(line))).getBytes());
-		 }
-		 catch(IOException Ex)
-		 {
+		long x = System.currentTimeMillis();
+		File input = new File("Input.txt");
+		File output = new File("output.txt");
+		try(FileInputStream iS = new FileInputStream(input); FileOutputStream oS = new FileOutputStream(output))
+		{
+			String line = "";
+			int i = 0;
+			while((i = iS.read()) != -1) line += (char) i;
+			output.createNewFile();
+			oS.write(("" + check(Integer.parseInt(line))).getBytes());
+		}
+		catch(IOException Ex)
+		{
 			 Ex.printStackTrace();
-		 }
+		}
+		System.out.println(System.currentTimeMillis() - x);
 	}
 	
 	long check(int num)
