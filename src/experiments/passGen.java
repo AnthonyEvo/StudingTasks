@@ -15,9 +15,9 @@ public class passGen {
 		}
 		try {
 			FileOutputStream fStream = new FileOutputStream(genResult);
-			for(int i = 0; i < 24; i++)
+			for(int i = 0; i < 12; i++)
 			{
-				fStream.write(genPass());
+				fStream.write(genSymb());
 			}
 		}
 		catch(IOException Ex) {System.out.println(Ex);}
@@ -27,14 +27,14 @@ public class passGen {
 		new passGen();
 	}
 		
-	int genPass() {
+	int genSymb() {
 		switch(Math.abs(new Random().nextInt()) % 3) {
 		case 0:
-			return (Math.abs(new Random().nextInt()) % 9 + 48);
+			return (Math.abs(new Random().nextInt()) % 10 + 48);
 		case 1:
-			return (Math.abs(new Random().nextInt()) % 25 + 97);
+			return (Math.abs(new Random().nextInt()) % 26 + 97);
 		case 2:
-			return (Math.abs(new Random().nextInt()) % 25 + 65);
+			return (Math.abs(new Random().nextInt()) % 26 + 65);
 		}
 		return 48;
 	}
