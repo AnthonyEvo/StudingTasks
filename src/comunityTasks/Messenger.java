@@ -5,13 +5,13 @@ import java.net.*;
 import javax.swing.*;
 import java.util.Calendar;
 
-public class Messanger {
+public class Messenger {
 	
-	String serverAddress = "127.0.0.1"/*"178.124.156.184"*/, clientAddress = "127.0.0.1";
+	String serverAddress = "178.124.156.184", clientAddress = "127.0.0.1";
 	int serverPort = 12080, clientPort = 12079;
 	String serverMessage = "", clientMessage = "";
 	
-	Messanger() {
+	Messenger() {
 		new Server();
 		try {
 			Thread.sleep(3000);
@@ -23,12 +23,15 @@ public class Messanger {
 	}
 	
 	public static void main(String args[]) {
-		new Messanger();
+		new Messenger();
 	}
+	
 	
 	class Server implements Runnable{
 		
-		byte servInputBuffer[] = new byte[1024], servOutputBuffer[] = new byte[1024];
+		byte servInputBuffer[] = new byte[1024], servOutputBuffer[] = new byte[servInputBuffer.length];
+		
+		String defaultMessege = "server online";
 		
 		Server(){
 			Thread serverThread = new Thread(this, "Messanger Server");
@@ -50,19 +53,25 @@ public class Messanger {
 		
 		void manageMessages() throws IOException, InterruptedException {
 			
-			try (DatagramSocket socket = new DatagramSocket(serverPort)) {
+			try (DatagramSocket socket = new DatagramSocket(serverPort, InetAddress.getByName("192.168.100.131"))) {
 				System.out.println("Server Started");
 				while(true) {
 					serverMessage = "";
 					
 					DatagramPacket input = new DatagramPacket(servInputBuffer, servInputBuffer.length);
 					socket.receive(input);
-					socket.send(new DatagramPacket(servOutputBuffer, servInputBuffer.length, input.getAddress(), clientPort));
-					String message = new String(input.getData());
-					if(message.trim().length() > 0) {
+					
+					for(int i = 0; i < defaultMessege.getBytes().length; i++) {
+						servOutputBuffer[i] = defaultMessege.getBytes()[i];
+					}
+					
+					socket.send(new DatagramPacket(servOutputBuffer, servOutputBuffer.length, input.getAddress(), input.getPort()));
+					
+					String messege = new String(input.getData());
+					if(messege.trim().length() > 0) {
 						serverMessage += Calendar.getInstance().getTime() + " " + input.getAddress().getHostAddress() + " ";
 						
-						for(char x : message.toCharArray()) {	
+						for(char x : messege.toCharArray()) {	
 							if(x != 0)
 							serverMessage += x;
 						}
@@ -72,7 +81,7 @@ public class Messanger {
 			}
 		}
 	}
-
+	
 	class Client implements Runnable{
 		
 		byte cliInputBuffer[] = new byte[1024], cliOutputBuffer[] = new byte[1024];
@@ -87,19 +96,22 @@ public class Messanger {
 		}
 		
 		void requestServer() {
-			System.out.println("Client Started");
+			System.out.println("Client Started");	
+			String defaultMessage = "Check Connection";
+			
 			try (DatagramSocket socket = new DatagramSocket(clientPort)) {
 			
+				socket.setSoTimeout(5000);
+				
 				while(true) {
 					
-					DatagramPacket output;
+					DatagramPacket output, input;
 					String message = new String(cliInputBuffer);
 					
 					if(message.trim().length() > 0) {
 						output = new DatagramPacket(cliInputBuffer, cliInputBuffer.length, InetAddress.getByName(serverAddress), serverPort);
 					} else {
 						
-						String defaultMessage = "Check Connection";
 						for(int i = 0; i < defaultMessage.getBytes().length; i++) {
 							cliInputBuffer[i] = defaultMessage.getBytes()[i];
 						}
@@ -108,20 +120,26 @@ public class Messanger {
 					}
 					
 					socket.send(output);
+					
+					input = new DatagramPacket(cliInputBuffer, cliInputBuffer.length);
+					socket.receive(input);
+					System.out.println(new String(input.getData()));
+					
 					Thread.sleep(500);
 				}
 			}
 			catch (IOException Ex) {
-				
+				System.out.println("Seems server is ofline, but no guaranty");
 			}
 			catch (InterruptedException Ex) {
 				
 			}
 		}
 	}
-
-	class MessangerScreen extends JPanel implements Runnable{
-		MessangerScreen() {
+	
+	class MessengerScreen extends JPanel implements Runnable{
+		
+		MessengerScreen() {
 			
 		}
 		
