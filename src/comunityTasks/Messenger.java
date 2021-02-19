@@ -76,7 +76,7 @@ public class Messenger {
 							serverMessage += x;
 						}
 					}
-					System.out.println(serverMessage);
+//					System.out.println(serverMessage);
 				}
 			}
 		}
@@ -130,6 +130,7 @@ public class Messenger {
 			}
 			catch (IOException Ex) {
 				System.out.println("Seems server is ofline, but no guaranty");
+				requestServer();
 			}
 			catch (InterruptedException Ex) {
 				
