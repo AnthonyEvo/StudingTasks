@@ -2,6 +2,7 @@ package comunityTasks;
 
 import java.io.*;
 import java.net.*;
+import java.awt.*;
 import javax.swing.*;
 import java.util.Calendar;
 
@@ -12,19 +13,22 @@ public class Messenger {
 	String serverMessage = "", clientMessage = "";
 	
 	Messenger() {
-		new Server();
+/*		new Server();
 		try {
 			Thread.sleep(3000);
 		} catch(InterruptedException Ex) {
 			
 		}
-		new Client();
+		new Client();*/
+		
+		new MessengerScreen();
 		
 	}
 	
 	public static void main(String args[]) {
 		new Messenger();
 	}
+	
 	
 	
 	class Server implements Runnable{
@@ -84,7 +88,7 @@ public class Messenger {
 	
 	class Client implements Runnable{
 		
-		byte cliInputBuffer[] = new byte[1024], cliOutputBuffer[] = new byte[1024];
+		byte cliInputBuffer[] = new byte[1024], cliOutputBuffer[] = new byte[cliInputBuffer.length];
 		
 		Client() {
 			Thread clientThread = new Thread(this, "Messanger Client");
@@ -140,14 +144,44 @@ public class Messenger {
 	
 	class MessengerScreen extends JPanel implements Runnable{
 		
+		JFrame window;
+		JPanel inputPanel;
+		
 		MessengerScreen() {
+			Thread screen = new Thread(this, "Screen");
+			screen.start();
+		}
+		
+		void initiateScreen(String name) {
+			window = new JFrame("Messeger " + name);
+			window.setSize(500, 300);
+			window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			
+			this.setBorder(BorderFactory.createLineBorder(Color.black));
+			
+			window.add(this);
+			
+			inputPanel = new JPanel();
+			inputPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+			
+			window.add(inputPanel);
+			window.setLayout(new GridLayout(2,1));
+			window.setVisible(true);
+		}
+		
+		JTextPane setInputTextPane() {
+			
+			return null;
+		}
+		
+		JButton setSnedButton() {
+			
+			return null;
 		}
 		
 		public void run() {
-			
+			initiateScreen("Client");
 		}
 	}
-
 }
 
