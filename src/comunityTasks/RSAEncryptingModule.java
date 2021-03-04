@@ -28,7 +28,7 @@ public class RSAEncryptingModule {
 		new RSAEncryptingModule();
 	}
 	
-	BigInteger calculateE() {
+	BigInteger calculateE() {	//Вычисление открытого ключа
 		
 		F = (P.subtract(BigInteger.valueOf(1))).multiply(Q.subtract(BigInteger.valueOf(1)));
 		BigInteger[] simpleNums = new BigInteger[5];
@@ -47,7 +47,7 @@ public class RSAEncryptingModule {
 		return simpleNums[(int) Math.abs(Math.random() * 4)];
 	}
 	
-	BigInteger calculateD() {
+	BigInteger calculateD() {	//Вычисление закрытого ключа
 		BigInteger temp = F.multiply(BigInteger.valueOf((int)(Math.random() * 100))).divide(BigInteger.valueOf(100));
 		
 		do {
@@ -70,7 +70,7 @@ public class RSAEncryptingModule {
 		return temp;
 	}
 	
-	BigInteger calculateN() {
+	BigInteger calculateN() {	//Расчитываем произведение простых чисел
 		return P.multiply(Q);
 	}
 	
