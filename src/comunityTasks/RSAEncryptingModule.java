@@ -15,12 +15,12 @@ public class RSAEncryptingModule {
 		
 		System.out.println("(" + F + ")");
 		System.out.println("(" + E + ", " + N + ")");
-/*		System.out.println("(" + D + ", " + N + ")");
+		System.out.println("(" + D + ", " + N + ")");
 		
 		String temp = encrypt("error");
 		
 		System.out.println(temp);
-		System.out.println(decypher(temp));*/
+		System.out.println(decypher(temp));
 		
 	}
 	
@@ -48,12 +48,26 @@ public class RSAEncryptingModule {
 	}
 	
 	BigInteger calculateD() {	//Вычисление закрытого ключа
-		BigInteger temp = F.multiply(BigInteger.valueOf((int)(Math.random() * 100))).divide(BigInteger.valueOf(100));
 		
-		do {
-			temp = temp.subtract(BigInteger.valueOf(1));
-			System.out.println((E.multiply(temp)).mod(F) + "");
+		BigInteger temp = F/*.multiply(BigInteger.valueOf((int)(Math.random() * 100))).divide(BigInteger.valueOf(100))*/;
+		
+		BigInteger stepF = ((E.multiply(temp.subtract(BigInteger.valueOf(1)))).mod(F)).subtract(E.multiply(temp)).mod(F);
+		BigInteger iCount = F.divide(stepF);
+		
+		
+//		temp = temp.subtract(BigInteger.valueOf(1));
+		
+		for( ;!(E.multiply(temp)).mod(F).equals(new BigInteger("1")); ) {
 			
+			System.out.println((stepF + ", " + (E.multiply(temp)).mod(F)) + "");
+
+			if(E.multiply(temp).mod(F).compareTo(F) < 0 && E.multiply(temp).mod(F).compareTo(stepF) > 0) {
+				temp = temp.subtract(BigInteger.valueOf(1));
+			}
+			else {
+				temp = temp.subtract(iCount);
+			}
+		
 			try {
 				Thread.sleep(250);
 			}
@@ -61,9 +75,6 @@ public class RSAEncryptingModule {
 				
 			}
 		}
-		while(!(E.multiply(temp)).mod(F).equals(new BigInteger("1")));
-		
-		
 		
 		// (D * E) mod F = 1
 		

@@ -13,15 +13,15 @@ public class Messenger {
 	String serverMessage = "", clientMessage = "";
 	
 	Messenger() {
-/*		new Server();
+		new Server();
 		try {
 			Thread.sleep(3000);
 		} catch(InterruptedException Ex) {
 			
 		}
-		new Client();*/
+		new Client();
 		
-		new MessengerScreen();
+//		new MessengerScreen();
 		
 	}
 	
