@@ -29,8 +29,6 @@ public class Messenger {
 		new Messenger();
 	}
 	
-	
-	
 	class Server implements Runnable{
 		
 		byte servInputBuffer[] = new byte[1024], servOutputBuffer[] = new byte[servInputBuffer.length];

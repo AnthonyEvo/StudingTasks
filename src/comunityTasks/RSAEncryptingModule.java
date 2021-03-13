@@ -4,31 +4,16 @@ import java.math.BigInteger;
 
 public class RSAEncryptingModule {
 	
-	BigInteger P, Q, E, N, D, F;
+	private BigInteger P, Q, E, N, D, F;
 	
 	RSAEncryptingModule() {
-		
 		P = new BigInteger("462183876001"); Q = new BigInteger("423568976003");
 		N = calculateN();
 		E = calculateE();
 		D = calculateD();
-		
-		System.out.println("(" + F + ")");
-		System.out.println("(" + E + ", " + N + ")");
-		System.out.println("(" + D + ", " + N + ")");
-		
-		String temp = encrypt("error");
-		
-		System.out.println(temp);
-		System.out.println(decypher(temp));
-		
 	}
 	
-	public static void main(String Args[]) {
-		new RSAEncryptingModule();
-	}
-	
-	BigInteger calculateE() {	//Вычисление открытого ключа
+	private BigInteger calculateE() {	//Вычисление открытого ключа
 		
 		F = (P.subtract(BigInteger.valueOf(1))).multiply(Q.subtract(BigInteger.valueOf(1)));
 		BigInteger[] simpleNums = new BigInteger[5];
@@ -47,19 +32,14 @@ public class RSAEncryptingModule {
 		return simpleNums[(int) Math.abs(Math.random() * 4)];
 	}
 	
-	BigInteger calculateD() {	//Вычисление закрытого ключа
+	private BigInteger calculateD() {	//Вычисление закрытого ключа
 		
-		BigInteger temp = F/*.multiply(BigInteger.valueOf((int)(Math.random() * 100))).divide(BigInteger.valueOf(100))*/;
+		BigInteger temp = F;
 		
 		BigInteger stepF = ((E.multiply(temp.subtract(BigInteger.valueOf(1)))).mod(F)).subtract(E.multiply(temp)).mod(F);
 		BigInteger iCount = F.divide(stepF);
 		
-		
-//		temp = temp.subtract(BigInteger.valueOf(1));
-		
 		for( ;!(E.multiply(temp)).mod(F).equals(new BigInteger("1")); ) {
-			
-			System.out.println((stepF + ", " + (E.multiply(temp)).mod(F)) + "");
 
 			if(E.multiply(temp).mod(F).compareTo(F) < 0 && E.multiply(temp).mod(F).compareTo(stepF) > 0) {
 				temp = temp.subtract(BigInteger.valueOf(1));
@@ -81,7 +61,7 @@ public class RSAEncryptingModule {
 		return temp;
 	}
 	
-	BigInteger calculateN() {	//Расчитываем произведение простых чисел
+	private BigInteger calculateN() {	//Расчитываем произведение простых чисел
 		return P.multiply(Q);
 	}
 	
@@ -91,13 +71,11 @@ public class RSAEncryptingModule {
 		String encMessege = "";
 		
 		for(int i = 0; i < temp.length; i++) {
-			System.out.print(temp[i] + " ");
-		}
-		
-		System.out.println();
-		
-		for(int i = 0; i < temp.length; i++) {
-			encMessege += (BigInteger.valueOf(temp[i]).modPow(E, N)) + " ";
+			String tempMessege = (BigInteger.valueOf(temp[i]).modPow(E, N)) + " ";
+			
+			
+			
+			
 		}
 		
 		return encMessege;
