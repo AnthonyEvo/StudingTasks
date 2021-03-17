@@ -18,15 +18,17 @@ public class TrayTest extends JFrame {
 		trayIcon = new TrayIcon(ImageIO.read(new File("ico.gif")), "Tray test application");
 
 		trayIcon.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(true);
-				setState(JFrame.NORMAL);
+				setState(Frame.NORMAL);
 				removeTrayIcon();
 			}
 		});
 		addWindowStateListener(new WindowStateListener() {
+			@Override
 			public void windowStateChanged(WindowEvent e) {
-				if (e.getNewState() == JFrame.ICONIFIED) {
+				if (e.getNewState() == Frame.ICONIFIED) {
 					setVisible(false);
 					addTrayIcon();
 				}

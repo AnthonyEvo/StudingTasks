@@ -7,28 +7,28 @@ public class passGen {
 
 	passGen() {
 		File genResult = new File("Password.txt");
-		if(!genResult.exists()) {
+		if (!genResult.exists()) {
 			try {
 				genResult.createNewFile();
+			} catch (IOException Ex) {
 			}
-			catch(IOException Ex) {}
 		}
 		try {
 			FileOutputStream fStream = new FileOutputStream(genResult);
-			for(int i = 0; i < 12; i++)
-			{
+			for (int i = 0; i < 12; i++) {
 				fStream.write(genSymb());
 			}
+		} catch (IOException Ex) {
+			System.out.println(Ex);
 		}
-		catch(IOException Ex) {System.out.println(Ex);}
 	}
-	
+
 	public static void main(String args[]) {
 		new passGen();
 	}
-		
+
 	int genSymb() {
-		switch(Math.abs(new Random().nextInt()) % 3) {
+		switch (Math.abs(new Random().nextInt()) % 3) {
 		case 0:
 			return (Math.abs(new Random().nextInt()) % 10 + 48);
 		case 1:
@@ -38,5 +38,5 @@ public class passGen {
 		}
 		return 48;
 	}
-	
+
 }
