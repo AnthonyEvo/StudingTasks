@@ -2,11 +2,11 @@ package comunityTasks;
 
 import java.math.BigInteger;
 
-public class RSAEncryptingModule {
+public class RSAEncryptionSubModule {
 	
 	private BigInteger P, Q, E, N, D, F;
 	
-	RSAEncryptingModule() {
+	RSAEncryptionSubModule() {
 		P = new BigInteger("462183876001"); Q = new BigInteger("423568976003");
 		N = calculateN();
 		E = calculateE();
@@ -28,7 +28,6 @@ public class RSAEncryptingModule {
 				i++;
 			}			
 		}
-		
 		return simpleNums[(int) Math.abs(Math.random() * 4)];
 	}
 	
@@ -38,26 +37,15 @@ public class RSAEncryptingModule {
 		
 		BigInteger stepF = ((E.multiply(temp.subtract(BigInteger.valueOf(1)))).mod(F)).subtract(E.multiply(temp)).mod(F);
 		BigInteger iCount = F.divide(stepF);
-		
-		for( ;!(E.multiply(temp)).mod(F).equals(new BigInteger("1")); ) {
+		for(;!(E.multiply(temp)).mod(F).equals(new BigInteger("1"));) {
 
-			if(E.multiply(temp).mod(F).compareTo(F) < 0 && E.multiply(temp).mod(F).compareTo(stepF) > 0) {
+			if(E.multiply(temp).mod(F).compareTo(F) < 0 && E.multiply(temp).mod(F).compareTo(stepF) > 0) {	// (D * E) mod F = 1
 				temp = temp.subtract(BigInteger.valueOf(1));
 			}
 			else {
 				temp = temp.subtract(iCount);
 			}
-		
-			try {
-				Thread.sleep(250);
-			}
-			catch(Exception Ex) {
-				
-			}
 		}
-		
-		// (D * E) mod F = 1
-		
 		return temp;
 	}
 	
@@ -65,34 +53,31 @@ public class RSAEncryptingModule {
 		return P.multiply(Q);
 	}
 	
-	public String encrypt(String messege) {
-		
-		byte temp[] = messege.getBytes();
+	public String encrypt(int messege[]) {	//Шифруем сообщение так чтобы оно получилось кратным длинне ключа
 		String encMessege = "";
 		
-		for(int i = 0; i < temp.length; i++) {
-			String tempMessege = (BigInteger.valueOf(temp[i]).modPow(E, N)) + " ";
+		for(int i = 0; i < messege.length; i++) {
+			String tempMessege = (BigInteger.valueOf(messege[i]).modPow(E, N)) + "";
 			
-			
-			
-			
+			for(int j = tempMessege.length(); j < (N + "").length(); j++) {		//Заполняем начало нулями в случае если зашишрованное значение меньше чем длинна N
+				tempMessege = "0" + tempMessege;
+			}
+			encMessege += tempMessege;
 		}
-		
 		return encMessege;
 	}
 	
-	public String decypher(String messege) {
-		String temp[] = new String[5];
-		String decMessege = "";
+	public int[] decypher(String messege) {	
+		int temp[] = new int[messege.length() / (N + "").length()];
+		String tempMessege = messege;
 		
 		for(int i = 0; i < temp.length; i++) {
-			String part = messege.substring(0, messege.indexOf(" "));
-			messege = messege.substring(messege.indexOf(" ") + 1);
+			String part = tempMessege.substring(0, (N + "").length());
+			tempMessege = tempMessege.substring((N + "").length());
 			
-			decMessege += (new BigInteger(part).modPow(D, N)) + " ";
+			temp[i] = (new BigInteger(part).modPow(D, N)).intValue();
 		}
 		
-		return decMessege;
+		return temp;
 	}
-	
 }

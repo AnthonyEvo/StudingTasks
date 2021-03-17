@@ -2,18 +2,10 @@ package comunityTasks;
 
 import java.util.Random;
 
-public class PreEncription {
+public class PreEncriptionSubModule {
 	
-	PreEncription() {
-		for(int x: encrypt("Hello world!")) {
-			System.out.print(x + " ");
-		}
+	PreEncriptionSubModule() {
 		
-		System.out.print("\n" + dechipher(encrypt("Hello world!")));
-	}
-	
-	public static void main(String Args[]) {
-		new PreEncription();
 	}
 	
 	int[] encrypt(String messege) {
@@ -34,7 +26,6 @@ public class PreEncription {
 	String dechipher(int messege[]) {
 		
 		String decMessege = "";
-		int key = messege[0];
 		
 		for(int i = 1; i < messege.length; i++) {
 			decMessege += (char)(messege[i] - messege[i-1]);

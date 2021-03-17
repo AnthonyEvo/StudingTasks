@@ -13,7 +13,7 @@ public class Messenger {
 	String serverMessage = "", clientMessage = "";
 	
 	Messenger() {
-		new Server();
+/*		new Server();
 		try {
 			Thread.sleep(3000);
 		} catch(InterruptedException Ex) {
@@ -21,12 +21,16 @@ public class Messenger {
 		}
 		new Client();
 		
-//		new MessengerScreen();
+		new MessengerScreen();*/
 		
+		EncryptionModule eModule = new EncryptionModule();
+		eModule.desypher(eModule.encrypt("Error"));
 	}
 	
 	public static void main(String args[]) {
+		
 		new Messenger();
+		
 	}
 	
 	class Server implements Runnable{
