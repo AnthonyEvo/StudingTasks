@@ -15,7 +15,7 @@ public class passGen {
 		}
 		try {
 			FileOutputStream fStream = new FileOutputStream(genResult);
-			for (int i = 0; i < 12; i++) {
+			for (int i = 0; i < 16; i++) {
 				fStream.write(genSymb());
 			}
 		} catch (IOException Ex) {

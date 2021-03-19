@@ -7,18 +7,25 @@ import javax.swing.*;
 import java.util.Calendar;
 
 public class Messenger {
-
+	
+	/* TODO Подключить сборщик к проекту, чтобы собирать отдельно клентов и серверы
+	 * 
+	 */
+	
 	String serverAddress = "178.124.156.184", clientAddress = "127.0.0.1";
 	int serverPort = 12080, clientPort = 12079;
 	String serverMessage = "", clientMessage = "";
 
 	Messenger() {
 		
-		/*
-		 * new Server(); try { Thread.sleep(3000); } catch(InterruptedException Ex) {
+		/* new Server(); 
+		 * try { 
+		 * Thread.sleep(3000); 
+		 * } 
+		 * catch(InterruptedException Ex) {
 		 * 
-		 * } new Client();
-		 * 
+		 * } 
+		 * new Client();
 		 * new MessengerScreen();
 		 */
 

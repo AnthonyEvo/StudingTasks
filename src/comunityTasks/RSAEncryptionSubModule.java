@@ -2,7 +2,7 @@ package comunityTasks;
 
 import java.math.BigInteger;
 
-public class RSAEncryptionSubModule {
+public class RSAEncryptionSubModule {	// RSA разобран исключительно в методических(математиика) цел€х, не нужно придумывать что  не слышал про java.security
 
 	private BigInteger P, Q, E, N, D, F;	// ѕеременные обзывались дл€ того чтобы проще было с уравнением работать
 
@@ -23,7 +23,6 @@ public class RSAEncryptionSubModule {
 		BigInteger temp = F;
 
 		for (int i = 0; i < 5;) {
-
 			temp = temp.subtract(BigInteger.valueOf(1));
 
 			if (temp.isProbablePrime(1) && temp.compareTo(F.divide(BigInteger.valueOf(2))) > 0) {
@@ -38,13 +37,12 @@ public class RSAEncryptionSubModule {
 
 		BigInteger temp = F;
 
-		BigInteger stepF = ((E.multiply(temp.subtract(BigInteger.valueOf(1)))).mod(F)).subtract(E.multiply(temp))
-				.mod(F);
+		BigInteger stepF = ((E.multiply(temp.subtract(BigInteger.valueOf(1)))).mod(F)).subtract(E.multiply(temp)).mod(F);
 		BigInteger iCount = F.divide(stepF);
+		
 		for (; !(E.multiply(temp)).mod(F).equals(new BigInteger("1"));) {
 
-			if (E.multiply(temp).mod(F).compareTo(F) < 0 && E.multiply(temp).mod(F).compareTo(stepF) > 0) { // (D * E)
-																											// mod F = 1
+			if (E.multiply(temp).mod(F).compareTo(F) < 0 && E.multiply(temp).mod(F).compareTo(stepF) > 0) { // (D * E)mod F = 1
 				temp = temp.subtract(BigInteger.valueOf(1));
 			} else {
 				temp = temp.subtract(iCount);
@@ -63,9 +61,7 @@ public class RSAEncryptionSubModule {
 		for (int i = 0; i < messege.length; i++) {
 			String tempMessege = (BigInteger.valueOf(messege[i]).modPow(E, N)) + "";
 
-			for (int j = tempMessege.length(); j < (N + "").length(); j++) { // «аполн€ем начало нул€ми в случае если
-																				// зашишрованное значение меньше чем
-																				// длинна N
+			for (int j = tempMessege.length(); j < (N + "").length(); j++) { // «аполн€ем начало нул€ми в случае если зашишрованное значение меньше чем длинна N
 				tempMessege = "0" + tempMessege;
 			}
 			encMessege += tempMessege;

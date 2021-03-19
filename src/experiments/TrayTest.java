@@ -7,6 +7,7 @@ import java.awt.event.*;
 import java.io.*;
 
 public class TrayTest extends JFrame {
+	
 	private SystemTray systemTray = SystemTray.getSystemTray();
 	private TrayIcon trayIcon;
 

@@ -5,7 +5,7 @@ import java.util.Random;
 public class PreEncriptionSubModule {
 
 	PreEncriptionSubModule() {
-
+		
 	}
 
 	int[] encrypt(String messege) {
