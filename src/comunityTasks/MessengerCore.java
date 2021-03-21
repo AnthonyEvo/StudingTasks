@@ -6,7 +6,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.Calendar;
 
-public class Messenger {
+public class MessengerCore {
 	
 	/* TODO Подключить сборщик к проекту, чтобы собирать отдельно клентов и серверы
 	 * 
@@ -16,7 +16,7 @@ public class Messenger {
 	int serverPort = 12080, clientPort = 12079;
 	String serverMessage = "", clientMessage = "";
 
-	Messenger() {
+	MessengerCore() {
 		
 		/* new Server(); 
 		 * try { 
@@ -28,18 +28,17 @@ public class Messenger {
 		 * new Client();
 		 * new MessengerScreen();
 		 */
-
+		
 		EncryptionModule eModule = new EncryptionModule();
 		eModule.desypher(eModule.encrypt("Error"));
 	}
 
 	public static void main(String args[]) {
 
-		new Messenger();
+		new MessengerCore();
 	}
 
-	/*
-	 * Сервер месенджера, должен принимать сообщения, отправлять публичные и личные
+	/* Сервер месенджера, должен принимать сообщения, отправлять публичные и личные
 	 * сообщения клиентам, являясь узлом передачи данных
 	 */
 

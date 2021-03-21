@@ -18,7 +18,7 @@ class GameMap {
 }
 
 class GameField {
-
+	
 	int x, y, heights;
-
+	
 }

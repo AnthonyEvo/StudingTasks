@@ -10,7 +10,7 @@ public class Main {
 	}
 }
 
-class Game implements Runnable{
+class Game implements Runnable {
 	
 	Thread game = new Thread(this, "game");
 	public Window window;
