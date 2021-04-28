@@ -51,12 +51,13 @@ public class Example {
 }
 
 class Square {
-	Point v[] = new Point[4];
-	double sideLength = 10;
+	
 	Point axis = new Point(15, 15);
-
+	Point v[] = new Point[4];
+	
+	double sideLength = 10;
 	double angle = 315;
-
+	
 	Square(double posX, double posY){
 		v[0] = new Point(0, 0);
 		v[1] = new Point(0, sideLength);
